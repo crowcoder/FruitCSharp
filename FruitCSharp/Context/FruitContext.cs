@@ -7,9 +7,15 @@ using System.Threading.Tasks;
 
 namespace FruitCSharp.Context
 {
-    public class FruitContext : DbContext
+    public class FruitContext : DbContext        
     {
+        public FruitContext()
+            : base("Fruit")
+        {
 
+        }
 
+        public DbSet<Models.GrowsOn> GrowsOnDbSet { get; set; }
+        public DbSet<Models.Fruit> FruitDbSet { get; set; }
     }
 }

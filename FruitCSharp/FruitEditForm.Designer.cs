@@ -52,6 +52,7 @@
             this.buttonSaveChanges.TabIndex = 1;
             this.buttonSaveChanges.Text = "&Save Changes";
             this.buttonSaveChanges.UseVisualStyleBackColor = true;
+            this.buttonSaveChanges.Click += new System.EventHandler(this.buttonSaveChanges_Click);
             // 
             // FruitEditForm
             // 
@@ -65,6 +66,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FruitEditForm";
             this.Text = "Fruit Maintenance";
+            this.Load += new System.EventHandler(this.FruitEditForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFruit)).EndInit();
             this.ResumeLayout(false);
 
