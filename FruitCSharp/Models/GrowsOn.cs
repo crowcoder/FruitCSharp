@@ -1,6 +1,4 @@
-﻿using System.Data.Entity;
-
-namespace FruitCSharp.Models
+﻿namespace FruitCSharp.Models
 {
     public class GrowsOn
     {
