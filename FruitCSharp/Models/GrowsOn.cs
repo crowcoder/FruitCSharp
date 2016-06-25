@@ -1,7 +1,10 @@
-﻿[Table("GrowsOn")]
+﻿using System.Data.Entity;
+
 namespace FruitCSharp.Models
 {
-    class GrowsOn
+    public class GrowsOn
     {
+        public int Id { get; set; }
+        public string GrowsOnName { get; set; }
     }
 }
