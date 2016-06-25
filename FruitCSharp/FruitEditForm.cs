@@ -7,7 +7,9 @@ namespace FruitCSharp
 {
     public partial class FruitEditForm : Form
     {
-        //This is the Entity Framework data context.
+        //This is the Entity Framework data context. We create this once and
+        //keep it as a class level field because our data would not be
+        //"connected" to it if we recreated it within a method.
         FruitContext ctx = new FruitContext();
 
         public FruitEditForm()
@@ -32,15 +34,12 @@ namespace FruitCSharp
 
             //Wraps data in magic that allows data to stay in sync with the
             //edits we do in the grid.
-            BindingSource fruitBindingSrc = new BindingSource();
-            var fruits = ctx.FruitDbSet.Local.ToBindingList<Models.Fruit>();
-            fruitBindingSrc.DataSource = fruits;
-
+            var fruits = ctx.FruitDbSet.Local.ToBindingList<Models.Fruit>();          
             fruits.AllowEdit = true;
             fruits.AllowNew = true;
             fruits.AllowRemove = true;
 
-            dataGridViewFruit.DataSource = fruitBindingSrc;
+            dataGridViewFruit.DataSource = fruits;
         }
         
         private void FruitEditForm_Load(object sender, EventArgs e)
@@ -50,6 +49,12 @@ namespace FruitCSharp
 
         private void buttonSaveChanges_Click(object sender, EventArgs e)
         {
+            //NOTICE we do not loop over grid rows and pull data out of cells and do
+            //sql statement! The grid is only there to provide a UI. It
+            //is set up (data bound) to keep our data source in sync
+            //with the changes to the grid. All we need to do is save
+            //changes on the context and what we see in the grid is what
+            //we will get in the database. 
             ctx.SaveChanges();
         }
 
@@ -125,6 +130,11 @@ namespace FruitCSharp
             if (disposing && (components != null))
             {
                 components.Dispose();
+
+                //The context is a Disposable component. We could get away with not disposing
+                //it since we have only one form and it would be cleaned up on exit, but it is
+                //a good habit to get into, especially because most projects are not this simple
+                //and would create memory leaks if not handled properly.
                 ctx.Dispose();
             }
             base.Dispose(disposing);
